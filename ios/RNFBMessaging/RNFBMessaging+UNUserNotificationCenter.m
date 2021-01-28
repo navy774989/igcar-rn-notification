@@ -65,14 +65,6 @@ struct {
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
   if (notification.request.content.userInfo[@"gcm.message_id"]) {
-      if(remoteNotification[@"room"]){
-          [NSTimer scheduledTimerWithTimeInterval:1 repeats:false block:^(NSTimer * _Nonnull timer) {
-              dispatch_async(dispatch_get_main_queue(), ^{
-              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"igcar://chat?room=" stringByAppendingString:remoteNotification[@"room"]]] options:@{} completionHandler:nil];
-            });
-          }];
-
-      }
     NSDictionary *notificationDict = [RNFBMessagingSerializer notificationToDict:notification];
 
     // Don't send an event if contentAvailable is true - application:didReceiveRemoteNotification will send the event
